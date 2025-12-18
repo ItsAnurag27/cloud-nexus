@@ -1,0 +1,47 @@
+name: Deploy to Docker Hub
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build and Push Image to Docker Hub
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/prod-cn-website:latest .
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/prod-cn-website:latest
+
+    - name: Deploy to EC2
+      run: |
+        echo "${{ secrets.SSHKEY }}" > prod-cn-website.pem
+        chmod 600 prod-cn-website.pem
+        
+        ssh -o StrictHostKeyChecking=no -i "prod-cn-website.pem" ubuntu@ec2-13-200-2-193.ap-south-1.compute.amazonaws.com << 'EOF'
+          docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_PASSWORD }}"
+
+          # Stop and remove the existing container
+          docker stop prod-cn-website || true
+          docker rm prod-cn-website || true
+
+          # Pull the latest image
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/prod-cn-website:latest
+
+          # Run the container with the latest image
+          docker run -d --name prod-cn-website -p 8080:80 ${{ secrets.DOCKERHUB_USERNAME }}/prod-cn-website:latest
+
+          # Remove old images (excluding the latest one)
+          docker image prune -f
+        EOF

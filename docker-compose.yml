@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  cloudnexus-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cloudnexus-app
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # SSL certificates from Let's Encrypt
+      - /etc/letsencrypt:/etc/nginx/ssl:ro
+      # Optionally mount your dist folder (comment out if you want to use the one built in Docker)
+      # - ./dist:/usr/share/nginx/html:ro
+    restart: always
+    environment:
+      - TZ=UTC
+    networks:
+      - cloudnexus-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  cloudnexus-network:
+    driver: bridge

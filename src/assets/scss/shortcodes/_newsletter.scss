@@ -1,0 +1,194 @@
+/*****************************
+  Newsletter
+*****************************/
+.newsletter {
+	position: relative;
+
+	.form-control {
+		padding-right: 150px;
+	}
+
+	.btn {
+		position: absolute;
+		right: 0;
+		line-height: 20px;
+		top: 0;
+		padding: 14px 30px;
+	}
+
+}
+
+
+.newsletter-subscribe {
+	.title {
+		font-family: $font-hedding;
+		font-size: 200px;
+		line-height: normal;
+		color: rgba($white, 0.03);
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: -1;
+	}
+
+	.form-group {
+		.form-control {
+			color: $white;
+	    font-size: 20px;
+	    padding: 30px 0px;
+	    padding-right: 150px;
+	    margin-bottom: 0;
+	    border-bottom: 1px solid rgba($white, 0.1);
+
+	    &:placeholder-shown {
+	    	color: $white;
+	    }
+
+	    &:focus {
+	    	border-color: $gradient-2;
+	    }
+		}
+
+		.subscribe-btn {
+	    font-size: 20px;
+	    line-height: normal;
+	    flex-direction: row;
+	    gap: 15px;
+	    padding: 15px 0;
+	    height: auto;
+	    width: auto;
+	    border: none;
+	    color: white;
+	    position: absolute;
+	    top: 50%;
+	    right: 0;
+	    transform: translateY(-50%);
+
+	    &:hover {
+	    	border: none;
+	    	color: $gradient-2;
+	    }
+
+	    &:after {
+	    	display: none;
+	    }
+		}
+	}
+
+	.form-check {
+		margin: 0;
+		min-height: auto;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .form-checkbox {
+    	position: relative;
+	    appearance: none;
+	    -webkit-appearance: none;
+	    height: 16px;
+	    width: 16px;
+	    border-radius: 4px;
+	    border: 1px solid $white;
+
+	    &:checked {
+	    	border-color: transparent;
+
+	    	&:before {
+	    		content: "\f00c";
+	    		height: 16px;
+	    		width: 16px;
+	    		border-radius: 4px;
+	    		font-family: "Font Awesome 6 Free";
+	    		display: flex;
+	    		justify-content: center;
+	    		align-items: center;
+	    		font-size: 12px;
+	    		line-height: 1;
+	    		font-weight: 700;
+	    		color: $white;
+	    		position: absolute;
+	    		top: 50%;
+	    		left: 50%;
+	    		transform: translate(-50%, -50%);
+	    		background-image: linear-gradient(-55deg, $gradient-1 2%, $gradient-2 56%, $gradient-3 99%);
+	    	}
+	    }
+		}
+	}
+}
+
+@media (max-width: 1199px) {
+	.newsletter-subscribe {
+		.title {
+			font-size: 160px;
+		}
+	}
+}
+
+@media (max-width: 991px) {
+	.newsletter-subscribe {
+		.title {
+			font-size: 120px;
+		}
+		.form-group {
+			.form-control {
+				padding: 20px 0;
+			}
+		}
+		.form-check {
+	    margin-top: 15px;
+		}
+	}
+}
+
+@media (max-width: 767px) {
+  .newsletter-subscribe {
+   	.title {
+    	font-size: 90px;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+	.newsletter-subscribe {
+		.title {
+      font-size: 74px;
+    }
+
+		.form-group {
+	    .form-control {
+        padding: 15px 0;
+        font-size: 16px;
+    	}
+
+			.subscribe-btn {
+		    font-size: 16px;
+		    gap: 10px;
+		  }
+		}
+
+		.form-check {
+			label {
+		    font-size: 16px;
+			}
+		}
+	}
+}
+
+@media (max-width: 479px) {
+	.newsletter-subscribe {
+		.title {
+			text-align: center;
+			font-size: 46px;
+			position: relative;
+			top: inherit;
+			left: inherit;
+			transform: none;
+			z-index: 1;
+			margin-bottom: 15px;
+		}
+	}
+}
