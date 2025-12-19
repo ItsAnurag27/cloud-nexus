@@ -54,15 +54,15 @@ docker-compose --version
 
 ```bash
 cd /home/ubuntu
-git clone https://github.com/your-username/Web-CloudNexus.git
-cd Web-CloudNexus-master
+git clone https://github.com/ItsAnurag27/cloud-nexus
+cd cloud-nexus
 ```
 
 OR if you have a private repository:
 
 ```bash
-git clone https://github.com/your-username/Web-CloudNexus.git
-cd Web-CloudNexus-master
+git clone https://github.com/ItsAnurag27/cloud-nexus
+cd cloud-nexus
 ```
 
 ## Step 3: Build and Run Docker Container
